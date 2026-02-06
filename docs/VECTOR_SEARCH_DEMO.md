@@ -199,6 +199,30 @@ public interface IHyDEService
 
 ---
 
+### 10. Graph-Vector Search (HNSW)
+**Status:** 🔜 Geplant
+
+**Beschreibung:**
+Verwendet einen graphbasierten ANN-Index (HNSW = Hierarchical Navigable Small World), um ähnliche Vektoren schneller zu finden. Die Suche ist approximativ und lässt sich ueber Parameter zwischen Recall und Geschwindigkeit steuern.
+
+**Vorteile:**
+- Deutlich schnellere Suche bei grossen Datenmengen
+- Skalierbar fuer Echtzeit-Use-Cases
+- Recall/Speed-Tradeoff konfigurierbar (z. B. über `efSearch`)
+
+**Implementierungsansatz:**
+Indexierung als HNSW in der Vector-DB konfigurieren und zur Laufzeit `efSearch` (oder vergleichbar) setzen.
+```csharp
+public record HnswConfig(
+    int M = 16,
+    int EfConstruction = 200,
+    int EfSearch = 64);
+```
+
+**Aufwand:** Mittel - Index-Konfiguration + optionaler UI-Toggle fuer Approximation
+
+---
+
 ## Demo-Szenarien
 
 Die JSON-Datei `docs/demo-sentences.json` enthält vordefinierte Szenarien, die spezifische Limitationen demonstrieren:
